@@ -2,7 +2,7 @@ from cpython.bytes cimport PyBytes_FromStringAndSize
 
 
 cdef bytes _fast_b62encode(const uint8_t* src, size_t src_len):
-    cdef char[BASE62_ENCODED_LENGTH] dst_buf
+    cdef signed char[BASE62_ENCODED_LENGTH] dst_buf
     cdef int err_code
 
     err_code = ksuid_b62_encode(dst_buf, BASE62_ENCODED_LENGTH, src, src_len)
@@ -21,7 +21,7 @@ cdef bytes _fast_b62encode(const uint8_t* src, size_t src_len):
     return PyBytes_FromStringAndSize(dst_buf, BASE62_ENCODED_LENGTH)
 
 
-cdef bytes _fast_b62decode(const char* src, size_t src_len):
+cdef bytes _fast_b62decode(const signed char* src, size_t src_len):
     cdef unsigned char[BASE62_BYTE_LENGTH] dst_buf
     cdef int err_code
 
