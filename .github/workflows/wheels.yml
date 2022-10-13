@@ -125,6 +125,12 @@ jobs:
             cibw:
               arch: x86_64
               build: "*manylinux*"
+          
+          - os: ubuntu-20.04
+            name: manylinux-aarch64
+            cibw:
+              arch: aarch64
+              build: "*manylinux*"
 
           - os: ubuntu-20.04
             name: musllinux
@@ -157,6 +163,12 @@ jobs:
         with:
           python-version: "3.8"
           architecture: ${{ matrix.architecture }}
+      
+      - name: Set up qemu
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
 
       - name: customize mac-arm-64
         if: contains(matrix.os, 'macos') && matrix.cibw.arch
@@ -186,8 +198,7 @@ jobs:
           rm -rf build
 
       - name: build wheels
-        run: |
-          python -m cibuildwheel .
+        uses: pypa/cibuildwheel@v2.11.1
 
       - uses: actions/upload-artifact@v3
         with:
