@@ -13,7 +13,7 @@
 
 static constexpr char table_b2a_base62[] =
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-static constexpr char table_a2b_base62[] = {
+static constexpr signed char table_a2b_base62[] = {
     /* clang-format off */
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -26,7 +26,7 @@ static constexpr char table_a2b_base62[] = {
     /* clang-format on */
 };
 
-int ksuid_b62_encode(char* dst, size_t dst_size, const unsigned char* src, size_t src_size) {
+int ksuid_b62_encode(signed char* dst, size_t dst_size, const unsigned char* src, size_t src_size) {
   const uint64_t SRC_BASE = 4294967296UL;
   const uint64_t DST_BASE = 62UL;
 
@@ -79,7 +79,7 @@ int ksuid_b62_encode(char* dst, size_t dst_size, const unsigned char* src, size_
   return 0;
 }
 
-int ksuid_b62_decode(unsigned char* dst, size_t dst_size, const char* src, size_t src_size) {
+int ksuid_b62_decode(unsigned char* dst, size_t dst_size, const signed char* src, size_t src_size) {
   const uint64_t SRC_BASE = 62UL;
   const uint64_t DST_BASE = 4294967296UL;
 
